@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease;
+            overflow: hidden;
+        }
+
+        /* Moonlight Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(200, 220, 255, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(200, 220, 255, 0.2);
+        }
+
+        .nav-links a:hover {
+            color: white;
+            text-shadow: 0 0 15px rgba(200, 220, 255, 0.5);
+        }
+
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Moon Overlay Effect */
+        .moon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.2;
+            background: radial-gradient(
+                circle at center, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(0, 0, 0, 0.5) 70%
+            );
+        }
+
+        .login-form {
+            background-color: rgba(10, 20, 40, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(100, 150, 255, 0.2);
+            border: 1px solid rgba(100, 150, 255, 0.2);
+        }
+
+        .login-form h2 {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            text-shadow: 0 0 5px rgba(100, 150, 255, 0.2);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            border-radius: 8px;
+            background-color: rgba(20, 30, 50, 0.6);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(100, 150, 255, 0.5);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(100, 150, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(100, 150, 255, 0.3);
+        }
+
+        .btn:hover {
+            background-color: rgba(100, 150, 255, 0.4);
+            box-shadow: 0 0 20px rgba(100, 150, 255, 0.3);
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(255, 110, 110, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="moon-overlay"></div>
+
+    <nav class="navbar">
+        <a href="#" class="logo">My Resume</a>
+        <ul class="nav-links">
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" required>
+                    <div id="usernameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                    <div id="passwordError" class="error"></div>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Moonlight-inspired Dynamic Background
+        function updateBackground(event) {
+            const mouseX = event.clientX / window.innerWidth;
+            const mouseY = event.clientY / window.innerHeight;
+
+            // Create a deep, dark moonlight-inspired gradient
+            document.body.style.background = `linear-gradient(
+                ${135 + mouseY * 90}deg, 
+                rgb(${10 + Math.floor(mouseX * 20)}, ${15 + Math.floor(mouseY * 30)}, ${30 + Math.floor(mouseX * 50)}), 
+                rgb(${5 + Math.floor(mouseX * 15)}, ${10 + Math.floor(mouseY * 20)}, ${20 + Math.floor(mouseX * 40)})
+            )`;
+
+            // Adjust moon overlay based on mouse position
+            const moonOverlay = document.querySelector('.moon-overlay');
+            moonOverlay.style.background = `radial-gradient(
+                circle at ${mouseX * 100}% ${mouseY * 100}%, 
+                rgba(255, 255, 255, ${0.1 + mouseX * 0.1}) 0%, 
+                rgba(0, 0, 0, ${0.5 + mouseY * 0.2}) 70%
+            )`;
+        }
+
+        // Add mouse move event listener
+        document.addEventListener('mousemove', updateBackground);
+
+        // Login Form Validation
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("loginUsername").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+
+            // Get stored data from localStorage
+            const storedUsername = localStorage.getItem("currentUser");
+            const storedPassword = localStorage.getItem("userPassword");
+
+            let valid = true;
+
+            // Username validation
+            if (username === "") {
+                document.getElementById("usernameError").innerText = "Username is required.";
+                valid = false;
+            } else {
+                document.getElementById("usernameError").innerText = "";
+            }
+
+            // Password validation
+            if (password === "") {
+                document.getElementById("passwordError").innerText = "Password is required.";
+                valid = false;
+            } else {
+                document.getElementById("passwordError").innerText = "";
+            }
+
+            // Additional credential check
+            if (username !== storedUsername || password !== storedPassword) {
+                document.getElementById("usernameError").innerText = "Invalid username or password.";
+                valid = false;
+            }
+
+            // If credentials are valid, redirect
+            if (valid) {
+                localStorage.setItem("currentUser", username);
+                alert("Login successful!");
+                window.location.href = "resume.html";
+            }
+        });
+    </script>
+</body>
+</html>
